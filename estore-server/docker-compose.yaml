@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  backend:
+    build: .
+    ports:
+      - 8000:3000
+    volumes:
+      # Corrected typo here
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: simple_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: Debuger@3011
+    volumes:
+      - ./.data:/var/lib/postgresql/data
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
