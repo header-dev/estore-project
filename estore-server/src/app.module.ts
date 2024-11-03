@@ -7,6 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 // import { SeederModule } from './database/seeder/seeder.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AuthController } from './modules/auth/auth.controller';
+import { AuthService } from './modules/auth/auth.service';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -21,9 +25,10 @@ import databaseConfig from './config/database.config';
     }),
     ProductModule,
     CategoryModule,
-    // SeederModule,
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AuthController],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}

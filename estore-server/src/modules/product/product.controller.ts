@@ -9,13 +9,16 @@ import {
   Body,
   Param,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
 // import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
 
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
   async getProducts(
     @Query('categoryId') categoryId?: number,
